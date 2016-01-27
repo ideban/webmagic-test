@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="webmagic.model.LicaiSimuInfo">
+	<sql id="cols">
+		id,title,type,nav,earnings,detailTitle,detailData,url
+	</sql>
+	<sql id="ucols">
+		title=#{title},type=#{type},nav=#{nav},earnings=#{earnings},detailTitle=#{detailTitle},detailData=#{detailData},url=#{url}
+	</sql>
+
+	<!-- 查询所有记录 -->
+	<select id="listAll" resultType="aliasesLicaiSimuInfo">
+		select
+		<include refid="cols" />
+		from simuinfo
+	</select>
+
+	<!-- 按条件查询 -->
+	<select id="find" parameterType="aliasesLicaiSimuInfo" resultType="aliasesLicaiSimuInfo">
+		select * from simuinfo
+		<where>
+			<if test="title!=null">
+				and title like "%"#{title}"%"
+			</if>
+			<if test="type!=null">
+				and type=#{type}
+			</if>
+		</where>
+	</select>
+
+	<!-- 新增 -->
+	<insert id="create" parameterType="aliasesLicaiSimuInfo">
+		insert into simuinfo
+		(id,title,type,nav,earnings,detailTitle,detailData,url)
+		values(#{id},#{title},#{type},#{nav},#{earnings},#{detailTitle},#{detailData},#{url})
+	</insert>
+	
+</mapper>
